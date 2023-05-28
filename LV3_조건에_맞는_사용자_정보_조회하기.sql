@@ -1,0 +1,15 @@
+-- 코드를 입력하세요
+SELECT A.USER_ID, A.NICKNAME
+      ,A.CITY || ' ' || A.STREET_ADDRESS1 || ' ' || STREET_ADDRESS2 AS ADDRESS
+      ,SUBSTR(A.TLNO,0,3) || '-'  || SUBSTR(A.TLNO,4,4) || '-' || SUBSTR(A.TLNO,8) 
+FROM   USED_GOODS_USER A
+JOIN
+      (
+          SELECT  WRITER_ID, COUNT(*) AS CNT
+          FROM    USED_GOODS_BOARD
+          GROUP BY WRITER_ID
+          HAVING  COUNT(*) >= 3
+      ) B
+      ON  A.USER_ID  = B.WRITER_ID
+
+ORDER BY A.USER_ID DESC
